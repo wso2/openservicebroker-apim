@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Error AsyncRequired",
+  "description": "OSB Error AsyncRequired",
+  "type": "object",
+  "required": [
+    "error"
+  ],
+  "properties": {
+    "error": {
+      "type": "string",
+      "enum": [
+        "AsyncRequired"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "pattern": "\\S+"
+    }
+  },
+  "additionalProperties": true
+}

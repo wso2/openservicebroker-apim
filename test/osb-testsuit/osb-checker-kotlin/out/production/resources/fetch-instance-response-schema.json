@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Fetch Instance Response",
+  "description": "OSB Fetch Instance Response",
+  "type": "object",
+  "required": [
+    "service_id",
+    "plan_id"
+  ],
+  "properties": {
+    "service_id":{
+      "type":"string",
+      "pattern": "\\S+"
+    },
+    "plan_id":{
+      "type":"string",
+      "pattern": "\\S+"
+    },
+    "dashboard_url": {
+      "type": "string",
+      "pattern": "\\S+"
+    },
+    "parameters": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

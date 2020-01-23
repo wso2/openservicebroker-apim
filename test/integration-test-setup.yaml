@@ -1,0 +1,48 @@
+# ------------------------------------------------------------------------
+#
+# Copyright 2019 WSO2, Inc. (http://wso2.com)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License
+#
+# ------------------------------------------------------------------------
+version: '3'
+services:
+  broker:
+    build:
+      context: ./../
+      dockerfile: ./test/Dockerfile
+    ports:
+      - "8444:8444"
+    restart: always
+    depends_on:
+      - "mysql"
+      - "wso2apim"
+    links:
+      - mysql
+    environment:
+      APIM_BROKER_LOG_LEVEL: "debug"
+      APIM_BROKER_DB_HOST: "mysql"
+      APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT: "https://wso2apim:9443/client-registration/v0.14/register"
+      APIM_BROKER_APIM_TOKENENDPOINT: "https://wso2apim:8243"
+      APIM_BROKER_APIM_PUBLISHERENDPOINT: "https://wso2apim:9443"
+      APIM_BROKER_APIM_STOREENDPOINT: "https://wso2apim:9443"
+  mysql:
+    image: "mysql:5.7.14"
+    restart: always
+    volumes:
+      - ./dbscripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+  wso2apim:
+    image: "wso2/wso2am:2.6.0"
+    restart: always
