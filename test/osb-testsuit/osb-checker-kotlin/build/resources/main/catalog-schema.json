@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Service Catalog",
+  "description": "OSB Service Catalog",
+  "type": "object",
+  "required": [
+    "services"
+  ],
+  "properties": {
+    "services": {
+      "required": [
+        "name",
+        "id",
+        "description",
+        "bindable",
+        "plans"
+      ],
+      "description": "Schema of service objects defined below. MAY be empty.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "id": {
+            "type": "string",
+            "pattern": "\\S+"
+          },
+          "description": {
+            "type": "string",
+            "pattern": "\\S+"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requires": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "syslog_drain",
+                "route_forwarding",
+                "volume_mount"
+              ]
+            }
+          },
+          "bindable": {
+            "type": "boolean"
+          },
+          "instances_retrievable": {
+            "type": "boolean"
+          },
+          "bindings_retrievable": {
+            "type": "boolean"
+          },
+          "allow_context_updates": {
+            "type": "boolean"
+          },
+          "metadata": {
+            "type": "object"
+          },
+          "dashboard_client": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "\\S+"
+              },
+              "secret": {
+                "type": "string",
+                "pattern": "\\S+"
+              },
+              "redirect_uri": {
+                "type": "string",
+                "pattern": "(http|ftp|https):\\/\\/[\\w\\-_]+([\\w\\-\\.,@?^=%&amp;:/~\\+#]*[\\w\\-\\@?^=%&amp;/~\\+#])?"
+              }
+            },
+            "additionalProperties": false
+          },
+          "plan_updateable": {
+            "type": "boolean"
+          },
+          "plans": {
+            "required": [
+              "id",
+              "name",
+              "description"
+            ],
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "\\S+"
+                },
+                "maximum_polling_duration": {
+                  "type": "integer"
+                },
+                "maintenance_info": {
+                  "type": "object",
+                  "required": [
+                    "version"
+                  ],
+                  "additionalProperties": true,
+                  "properties": {
+                    "version": {
+                      "type": "string",
+                      "pattern": "^(.*)$"
+                    },
+                    "description": {
+                      "type": "string",
+                      "pattern": "\\S+"
+                    }
+                  }
+                },
+                "name": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9-]+$"
+                },
+                "description": {
+                  "type": "string",
+                  "pattern": "\\S+"
+                },
+                "metadata": {
+                  "type": "object"
+                },
+                "free": {
+                  "type": "boolean"
+                },
+                "bindable": {
+                  "type": "boolean"
+                },
+                "schemas": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "service_instance": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "create": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "parameters": {
+                              "type": "object"
+                            }
+                          }
+                        },
+                        "update": {
+                          "type": [
+                            "object",
+                            "null"
+                          ],
+                          "properties": {
+                            "parameters": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "service_binding": {
+                      "type": [
+                        "object",
+                        "null"
+                      ],
+                      "properties": {
+                        "create": {
+                          "type": "object",
+                          "properties": {
+                            "parameters": {
+                              "type": "object"
+                            }
+                          }
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

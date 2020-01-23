@@ -1,0 +1,856 @@
+{
+	"info": {
+		"_postman_id": "0e1e2d3a-6b79-4b4a-b8d3-541f35213fc6",
+		"name": "OSB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "catalog",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "53635b13-d351-46c5-8769-404cda694f06",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"value": "2.14",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/catalog",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"catalog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "catalog Copy",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"value": "2.14",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/catalog",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"catalog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-service(plan: API)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{api-plan-id}}\",\n    \"context\": {\n        \"platform\": \"cloudfoundry\",\n        \"some_field\": \"some-contextual-data\"\n    },\n    \"organization_guid\": \"org-guid-here\",\n    \"space_guid\": \"space-guid-here\",\n    \"parameters\": {\n        \"api\": {\n   \"name\": \"PizzaShackAPI\",\n   \"description\": \"This document describe a RESTFul API for Pizza Shack online pizza delivery store.\\r\\n\",\n   \"context\": \"/pizzashack\",\n   \"version\": \"1.0.0\",\n   \"provider\": \"admin\",\n   \"apiDefinition\": \"{\\\"paths\\\":{\\\"/order\\\":{\\\"post\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"description\\\":\\\"Create a new Order\\\",\\\"parameters\\\":[{\\\"schema\\\":{\\\"$ref\\\":\\\"#/definitions/Order\\\"},\\\"description\\\":\\\"Order object that needs to be added\\\",\\\"name\\\":\\\"body\\\",\\\"required\\\":true,\\\"in\\\":\\\"body\\\"}],\\\"responses\\\":{\\\"201\\\":{\\\"headers\\\":{\\\"Location\\\":{\\\"description\\\":\\\"The URL of the newly created resource.\\\",\\\"type\\\":\\\"string\\\"}},\\\"schema\\\":{\\\"$ref\\\":\\\"#/definitions/Order\\\"},\\\"description\\\":\\\"Created.\\\"}}}},\\\"/menu\\\":{\\\"get\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"description\\\":\\\"Return a list of available menu items\\\",\\\"parameters\\\":[],\\\"responses\\\":{\\\"200\\\":{\\\"headers\\\":{},\\\"schema\\\":{\\\"title\\\":\\\"Menu\\\",\\\"properties\\\":{\\\"list\\\":{\\\"items\\\":{\\\"$ref\\\":\\\"#/definitions/MenuItem\\\"},\\\"type\\\":\\\"array\\\"}},\\\"type\\\":\\\"object\\\"},\\\"description\\\":\\\"OK.\\\"}}}}},\\\"schemes\\\":[\\\"https\\\"],\\\"produces\\\":[\\\"application/json\\\"],\\\"swagger\\\":\\\"2.0\\\",\\\"definitions\\\":{\\\"MenuItem\\\":{\\\"title\\\":\\\"Pizza menu Item\\\",\\\"properties\\\":{\\\"price\\\":{\\\"type\\\":\\\"string\\\"},\\\"description\\\":{\\\"type\\\":\\\"string\\\"},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"image\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"name\\\"]},\\\"Order\\\":{\\\"title\\\":\\\"Pizza Order\\\",\\\"properties\\\":{\\\"customerName\\\":{\\\"type\\\":\\\"string\\\"},\\\"delivered\\\":{\\\"type\\\":\\\"boolean\\\"},\\\"address\\\":{\\\"type\\\":\\\"string\\\"},\\\"pizzaType\\\":{\\\"type\\\":\\\"string\\\"},\\\"creditCardNumber\\\":{\\\"type\\\":\\\"string\\\"},\\\"quantity\\\":{\\\"type\\\":\\\"number\\\"},\\\"orderId\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"orderId\\\"]}},\\\"consumes\\\":[\\\"application/json\\\"],\\\"info\\\":{\\\"title\\\":\\\"PizzaShackAPI\\\",\\\"description\\\":\\\"This document describe a RESTFul API for Pizza Shack online pizza delivery store.\\\\n\\\",\\\"license\\\":{\\\"name\\\":\\\"Apache 2.0\\\",\\\"url\\\":\\\"http://www.apache.org/licenses/LICENSE-2.0.html\\\"},\\\"contact\\\":{\\\"email\\\":\\\"architecture@pizzashack.com\\\",\\\"name\\\":\\\"John Doe\\\",\\\"url\\\":\\\"http://www.pizzashack.com\\\"},\\\"version\\\":\\\"1.0.0\\\"}}\",\n   \"wsdlUri\": null,\n   \"status\": \"CREATED\",\n   \"responseCaching\": \"Disabled\",\n   \"cacheTimeout\": 300,\n   \"destinationStatsEnabled\": false,\n   \"isDefaultVersion\": false,\n   \"type\": \"HTTP\",\n   \"transport\":    [\n      \"http\",\n      \"https\"\n   ],\n   \"tags\": [\"pizza\"],\n   \"tiers\": [\"Unlimited\"],\n   \"maxTps\":    {\n      \"sandbox\": 5000,\n      \"production\": 1000\n   },\n   \"visibility\": \"PUBLIC\",\n   \"visibleRoles\": [],\n   \"endpointConfig\": \"{\\\"production_endpoints\\\":{\\\"url\\\":\\\"https://localhost:9443/am/sample/pizzashack/v1/api/\\\",\\\"config\\\":null},\\\"sandbox_endpoints\\\":{\\\"url\\\":\\\"https://localhost:9443/am/sample/pizzashack/v1/api/\\\",\\\"config\\\":null},\\\"endpoint_type\\\":\\\"http\\\"}\",\n   \"endpointSecurity\":    {\n      \"username\": \"user\",\n      \"type\": \"basic\",\n      \"password\": \"pass\"\n   },\n   \"gatewayEnvironments\": \"Production and Sandbox\",\n   \"sequences\": [{\"name\":\"json_validator\",\"type\": \"in\"},{\"name\":\"log_out_message\",\"type\": \"out\"}],\n   \"subscriptionAvailability\": null,\n   \"subscriptionAvailableTenants\": [],\n   \"businessInformation\":    {\n      \"businessOwnerEmail\": \"marketing@pizzashack.com\",\n      \"technicalOwnerEmail\": \"architecture@pizzashack.com\",\n      \"technicalOwner\": \"John Doe\",\n      \"businessOwner\": \"Jane Roe\"\n   },\n   \"corsConfiguration\":    {\n      \"accessControlAllowOrigins\": [\"*\"],\n      \"accessControlAllowHeaders\":       [\n         \"authorization\",\n         \"Access-Control-Allow-Origin\",\n         \"Content-Type\",\n         \"SOAPAction\"\n      ],\n      \"accessControlAllowMethods\":       [\n         \"GET\",\n         \"PUT\",\n         \"POST\",\n         \"DELETE\",\n         \"PATCH\",\n         \"OPTIONS\"\n      ],\n      \"accessControlAllowCredentials\": false,\n      \"corsConfigurationEnabled\": false\n   }\n}\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{api-plan-instance-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{api-plan-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-service(plan: App)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"service_id\": \"460F28F9-4D05-4889-970A-6BF5FB7D3CF8\",\n    \"plan_id\": \"00e851cd-ce8b-43eb-bc27-ac4d4fbb3204\",\n    \"organization_guid\": \"13da5abd-570b-45ad-bdad-ebc9ccb46859\",\n    \"space_guid\": \"7435cd7c-c405-4273-b637-6739367f20f5\",\n    \"parameters\": {\n        \"apis\": [\n            {\"name\": \"PizzaShackAPI\",\"version\": \"1.0.0\"}\n        ]\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-service(plan: subs)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{subs-plan-id}}\",\n    \"context\": {\n        \"platform\": \"cloudfoundry\",\n        \"some_field\": \"some-contextual-data\"\n    },\n    \"organization_guid\": \"org-guid-here\",\n    \"space_guid\": \"space-guid-here\",\n    \"parameters\": {\n        \"subs\":{\n        \t\"apiName\": \"PizzaShackAPI\",\n        \t\"appName\": \"sampleApp\",\n        \t\"tier\": \"Unlimited\"\n        }\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{subs-plan-instance-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{subs-plan-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bind-service",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bd11a34d-a1c4-4461-a11e-7e31184c41cc",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"context\": {\n    \"platform\": \"cloudfoundry\",\n    \"some_field\": \"some-contextual-data\"\n  },\n\"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n  \"bind_resource\": {\n    \"app_guid\": \"{{app-guid}}\"\n  },\n  \"parameters\": {\n   \n   \n  }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{bind-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{bind-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bind-service tmp",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"context\": {\n    \"platform\": \"cloudfoundry\",\n    \"some_field\": \"some-contextual-data\"\n  },\n\"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n  \"bind_resource\": {\n    \"app_guid\": \"{{app-guid}}\"\n  },\n  \"parameters\": {\n   \n   \n  }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{bind-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{bind-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bind-service 2nd time",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"context\": {\n    \"platform\": \"cloudfoundry\",\n    \"some_field\": \"some-contextual-data\"\n  },\n\"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n  \"bind_resource\": {\n    \"app_guid\": \"{{second-app-guid}}\"\n  },\n  \"parameters\": {\n    \"app\": {\n    \t\"subscriptionTier\": \"Unlimited\"\n}\n   \n  }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{bind-id-2}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{bind-id-2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-service(plan: App)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n    \"context\": {\n        \"platform\": \"cloudfoundry\"\n    },\n    \"organization_guid\": \"org-guid-here\",\n    \"space_guid\": \"space-guid-here\",\n    \"parameters\": {\n        \"apis\": [\n            {\"name\": \"WorldBank\", \"version\": \"1.0.0\"}\n        ],\n        \"abs\": { }\n    }\n}"
+				},
+				"url": {
+					"raw": "http:/{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}",
+					"host": [
+						"http:"
+					],
+					"port": "",
+					"path": [
+						"{{host}}:{{port}}",
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update-service(plan: API)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{api-plan-id}}\",\n    \"context\": {\n        \"platform\": \"cloudfoundry\",\n        \"some_field\": \"some-contextual-data\"\n    },\n    \"organization_guid\": \"org-guid-here\",\n    \"space_guid\": \"space-guid-here\",\n    \"parameters\": {\n        \"api\": {\n   \"name\": \"PizzaShackAPI\",\n   \"description\": \"This document describe a RESTFul API for Pizza Shack online pizza delivery store.\\r\\n\",\n   \"context\": \"/pizzashack\",\n   \"version\": \"1.0.0\",\n   \"provider\": \"admin\",\n   \"apiDefinition\": \"{\\\"paths\\\":{\\\"/order\\\":{\\\"post\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"description\\\":\\\"Create a new Order\\\",\\\"parameters\\\":[{\\\"schema\\\":{\\\"$ref\\\":\\\"#/definitions/Order\\\"},\\\"description\\\":\\\"Order object that needs to be added\\\",\\\"name\\\":\\\"body\\\",\\\"required\\\":true,\\\"in\\\":\\\"body\\\"}],\\\"responses\\\":{\\\"201\\\":{\\\"headers\\\":{\\\"Location\\\":{\\\"description\\\":\\\"The URL of the newly created resource.\\\",\\\"type\\\":\\\"string\\\"}},\\\"schema\\\":{\\\"$ref\\\":\\\"#/definitions/Order\\\"},\\\"description\\\":\\\"Created.\\\"}}}},\\\"/menu\\\":{\\\"get\\\":{\\\"x-auth-type\\\":\\\"Application & Application User\\\",\\\"x-throttling-tier\\\":\\\"Unlimited\\\",\\\"description\\\":\\\"Return a list of available menu items\\\",\\\"parameters\\\":[],\\\"responses\\\":{\\\"200\\\":{\\\"headers\\\":{},\\\"schema\\\":{\\\"title\\\":\\\"Menu\\\",\\\"properties\\\":{\\\"list\\\":{\\\"items\\\":{\\\"$ref\\\":\\\"#/definitions/MenuItem\\\"},\\\"type\\\":\\\"array\\\"}},\\\"type\\\":\\\"object\\\"},\\\"description\\\":\\\"OK.\\\"}}}}},\\\"schemes\\\":[\\\"https\\\"],\\\"produces\\\":[\\\"application/json\\\"],\\\"swagger\\\":\\\"2.0\\\",\\\"definitions\\\":{\\\"MenuItem\\\":{\\\"title\\\":\\\"Pizza menu Item\\\",\\\"properties\\\":{\\\"price\\\":{\\\"type\\\":\\\"string\\\"},\\\"description\\\":{\\\"type\\\":\\\"string\\\"},\\\"name\\\":{\\\"type\\\":\\\"string\\\"},\\\"image\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"name\\\"]},\\\"Order\\\":{\\\"title\\\":\\\"Pizza Order\\\",\\\"properties\\\":{\\\"customerName\\\":{\\\"type\\\":\\\"string\\\"},\\\"delivered\\\":{\\\"type\\\":\\\"boolean\\\"},\\\"address\\\":{\\\"type\\\":\\\"string\\\"},\\\"pizzaType\\\":{\\\"type\\\":\\\"string\\\"},\\\"creditCardNumber\\\":{\\\"type\\\":\\\"string\\\"},\\\"quantity\\\":{\\\"type\\\":\\\"number\\\"},\\\"orderId\\\":{\\\"type\\\":\\\"string\\\"}},\\\"required\\\":[\\\"orderId\\\"]}},\\\"consumes\\\":[\\\"application/json\\\"],\\\"info\\\":{\\\"title\\\":\\\"PizzaShackAPI\\\",\\\"description\\\":\\\"This document describe a RESTFul API for Pizza Shack online pizza delivery store.\\\\n\\\",\\\"license\\\":{\\\"name\\\":\\\"Apache 2.0\\\",\\\"url\\\":\\\"http://www.apache.org/licenses/LICENSE-2.0.html\\\"},\\\"contact\\\":{\\\"email\\\":\\\"architecture@pizzashack.com\\\",\\\"name\\\":\\\"John Doe\\\",\\\"url\\\":\\\"http://www.pizzashack.com\\\"},\\\"version\\\":\\\"1.0.0\\\"}}\",\n   \"wsdlUri\": null,\n   \"status\": \"CREATED\",\n   \"responseCaching\": \"Disabled\",\n   \"cacheTimeout\": 300,\n   \"destinationStatsEnabled\": false,\n   \"isDefaultVersion\": false,\n   \"type\": \"HTTP\",\n   \"transport\":    [\n      \"http\",\n      \"https\"\n   ],\n   \"tags\": [\"pizza\", \"updated\"],\n   \"tiers\": [\"Unlimited\"],\n   \"maxTps\":    {\n      \"sandbox\": 5000,\n      \"production\": 1000\n   },\n   \"visibility\": \"PUBLIC\",\n   \"visibleRoles\": [],\n   \"endpointConfig\": \"{\\\"production_endpoints\\\":{\\\"url\\\":\\\"https://localhost:9443/am/sample/pizzashack/v1/api/\\\",\\\"config\\\":null},\\\"sandbox_endpoints\\\":{\\\"url\\\":\\\"https://localhost:9443/am/sample/pizzashack/v1/api/\\\",\\\"config\\\":null},\\\"endpoint_type\\\":\\\"http\\\"}\",\n   \"endpointSecurity\":    {\n      \"username\": \"user\",\n      \"type\": \"basic\",\n      \"password\": \"pass\"\n   },\n   \"gatewayEnvironments\": \"Production and Sandbox\",\n   \"sequences\": [{\"name\":\"json_validator\",\"type\": \"in\"},{\"name\":\"log_out_message\",\"type\": \"out\"}],\n   \"subscriptionAvailability\": null,\n   \"subscriptionAvailableTenants\": [],\n   \"businessInformation\":    {\n      \"businessOwnerEmail\": \"marketing@pizzashack.com\",\n      \"technicalOwnerEmail\": \"architecture@pizzashack.com\",\n      \"technicalOwner\": \"John Doe\",\n      \"businessOwner\": \"Jane Roe\"\n   },\n   \"corsConfiguration\":    {\n      \"accessControlAllowOrigins\": [\"*\"],\n      \"accessControlAllowHeaders\":       [\n         \"authorization\",\n         \"Access-Control-Allow-Origin\",\n         \"Content-Type\",\n         \"SOAPAction\"\n      ],\n      \"accessControlAllowMethods\":       [\n         \"GET\",\n         \"PUT\",\n         \"POST\",\n         \"DELETE\",\n         \"PATCH\",\n         \"OPTIONS\"\n      ],\n      \"accessControlAllowCredentials\": false,\n      \"corsConfigurationEnabled\": false\n   }\n}\n    }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{api-plan-instance-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{api-plan-instance-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unbind-service",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"value": "2.14",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{bind-id}}?service_id={{service-id}}&plan_id={{app-plan-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{bind-id}}"
+					],
+					"query": [
+						{
+							"key": "service_id",
+							"value": "{{service-id}}"
+						},
+						{
+							"key": "plan_id",
+							"value": "{{app-plan-id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-service-key",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"value": "2.14",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{service-key-bind-id}}?service_id={{service-id}}&plan_id={{app-plan-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{service-key-bind-id}}"
+					],
+					"query": [
+						{
+							"key": "service_id",
+							"value": "{{service-id}}"
+						},
+						{
+							"key": "plan_id",
+							"value": "{{app-plan-id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-service(Plan: API)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{api-plan-instance-id}}?service_id={{service-id}}&plan_id={{api-plan-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{api-plan-instance-id}}"
+					],
+					"query": [
+						{
+							"key": "service_id",
+							"value": "{{service-id}}"
+						},
+						{
+							"key": "plan_id",
+							"value": "{{api-plan-id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-service(Plan: App)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}?service_id={{service-id}}&plan_id={{app-plan-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}"
+					],
+					"query": [
+						{
+							"key": "service_id",
+							"value": "{{service-id}}"
+						},
+						{
+							"key": "plan_id",
+							"value": "{{app-plan-id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-service(Plan: Subs)",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "X-Broker-API-Version",
+						"type": "text",
+						"value": "2.14"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{subs-plan-instance-id}}?service_id={{service-id}}&plan_id={{subs-plan-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{subs-plan-instance-id}}"
+					],
+					"query": [
+						{
+							"key": "service_id",
+							"value": "{{service-id}}"
+						},
+						{
+							"key": "plan_id",
+							"value": "{{subs-plan-id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create-service-key",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "X-Broker-API-Version",
+						"value": "2.14",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"context\": {\n    \"platform\": \"cloudfoundry\",\n    \"some_field\": \"some-contextual-data\"\n  },\n\"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n  \"parameters\": {\n\n  }\n}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}/service_bindings/{{service-key-bind-id}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"v2",
+						"service_instances",
+						"{{app-plan-instance-id}}",
+						"service_bindings",
+						"{{service-key-bind-id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Fetch Instance Response",
+  "description": "OSB Fetch Instance Response",
+  "type": "object",
+  "properties": {
+    "credentials": {
+      "type": "object"
+    },
+    "syslog_drain_url": {
+      "type": "string",
+      "pattern": "\\S+"
+    },
+    "route_service_url": {
+      "type": "string",
+      "pattern": "\\S+"
+    },
+    "parameters": {
+      "type": "object"
+    },
+    "volume_mounts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "volume_id"
+        ],
+        "properties": {
+          "volume_id": {
+            "type": "string",
+            "pattern": "\\S+"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

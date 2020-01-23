@@ -1,0 +1,16 @@
+config:
+  url: http://localhost
+  port: 8444
+  apiVersion: 2.14
+  user: admin
+  password: admin
+
+  provisionParameters:
+    00e851cd-ce8b-43eb-bc27-ac4d4fbb3204:
+      apis:
+       - name: "PizzaShackAPI"
+         version: "1.0.0"
+  services:
+    - id: 460F28F9-4D05-4889-970A-6BF5FB7D3CF8
+      plans:
+        - id: 00e851cd-ce8b-43eb-bc27-ac4d4fbb3204

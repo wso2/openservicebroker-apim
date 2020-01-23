@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Error MaintenanceInfoConflict",
+  "description": "OSB Error MaintenanceInfoConflict",
+  "type": "object",
+  "required": [
+    "error"
+  ],
+  "properties": {
+    "error": {
+      "type": "string",
+      "enum": [
+        "MaintenanceInfoConflict"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "pattern": "\\S+"
+    }
+  },
+  "additionalProperties": true
+}

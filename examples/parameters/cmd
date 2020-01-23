@@ -1,0 +1,22 @@
+cf create-service-broker apim admin admin https://apim-service-broker.apps.ixdev.wso2.com
+cf enable-service-access wso2apim-service -o system
+
+cf m
+cf create-service wso2apim-service app app-svc -c create-service-app.json
+
+cf update-service app-svc -c update-service-app.json
+
+cf bind-service spring-music app-svc
+cf restart spring-music
+cf env spring-music
+
+cf create-service-key app-svc app-service-key
+cf service-key app-svc app-service-key
+cf delete-service-key app-svc app-service-key
+
+
+cf unbind-service spring-music app-svc
+cf restart spring-music
+cf env spring-music
+
+cf delete-service app-svc

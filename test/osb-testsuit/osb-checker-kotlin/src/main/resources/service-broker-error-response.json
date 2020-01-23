@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "title": "OSB Error Response",
+  "description": "OSB Error Response",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string"
+    },
+    "description":{
+      "type":"string"
+    }
+  },
+  "additionalProperties": true
+}
