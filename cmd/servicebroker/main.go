@@ -41,7 +41,7 @@ const (
 	ErrMsgUnableToStartServerTLS = "unable to start the server on Host: %s port: %s TLS key: %s TLS cert: %s"
 	ErrMsgUnableToStartServer    = "unable to start the server on Host: %s port: %s"
 	InfoMSGShutdownBroker        = "starting APIM Service Broker shutdown"
-	InfoMSGServerStart           = "starting APIM broker"
+	InfoMSGServerStart           = "starting APIM Service broker"
 	ErrMsgUnableToAddForeignKeys = "unable to add foreign keys"
 )
 

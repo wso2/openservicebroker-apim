@@ -68,21 +68,21 @@ apim:
   # dynamic client endpoint
   dynamicClientEndpoint: "https://${keymanager-endpoint} "
   #dynamic client registration context
-  dynamicClientRegistrationContext: "/client-registration/v0.14/register"
+  dynamicClientRegistrationContext: "/client-registration/v0.16/register"
   # publisher endpoint
   publisherEndpoint: "https://${wso2apim-endpoint} "
   # publisher API context
-  publisherAPIContext: "/api/am/publisher/v0.14/apis"
+  publisherAPIContext: "/api/am/publisher/v0.16/apis"
   # store endpoint
   storeEndpoint: "https://${wso2apim-endpoint}"
   # store Application API context
-  storeApplicationContext: "/api/am/store/v0.14/applications"
+  storeApplicationContext: "/api/am/store/v0.16/applications"
   # store Subscription API Context
-  storeSubscriptionContext: "/api/am/store/v0.14/subscriptions"
+  storeSubscriptionContext: "/api/am/store/v0.16/subscriptions"
   # multiple Subscriptions context
-  storeMultipleSubscriptionsContext: "/api/am/store/v0.14/subscriptions/multiple"
+  storeMultipleSubscriptionsContext: "/api/am/store/v0.16/subscriptions/multiple"
   # generate application context
-  generateApplicationKeyContext: "/api/am/store/v0.14/applications/generate-keys"
+  generateApplicationKeyContext: "/api/am/store/v0.16/applications/generate-keys"
 
 # Database configuration
 db:
