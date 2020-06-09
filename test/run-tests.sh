@@ -26,8 +26,8 @@ until curl http://admin:admin@localhost:8444/v2/catalog -H "X-Broker-API-Version
 done
 
 docker run -v $PWD/test/collections:/etc/newman --network="host" -t postman/newman:ubuntu \
-    run "OSB-Integration-tests.postman_collection.json" \
-    --environment="OSB-Integration-test.postman_environment.json" \
+    run "APIM-OSB-Integration-tests.postman_collection.json" \
+    --environment="APIM-OSB-Integration-tests.postman_collection.json" \
     --reporters="json,cli" --reporter-json-export="newman-results.json"
 
 docker-compose -f $PWD/test/integration-test-setup.yaml down
