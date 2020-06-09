@@ -32,7 +32,7 @@ services:
     environment:
       APIM_BROKER_LOG_LEVEL: "debug"
       APIM_BROKER_DB_HOST: "mysql"
-      APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT: "https://wso2apim:9443/client-registration/v0.14/register"
+      APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT: "https://wso2apim:9443"
       APIM_BROKER_APIM_TOKENENDPOINT: "https://wso2apim:8243"
       APIM_BROKER_APIM_PUBLISHERENDPOINT: "https://wso2apim:9443"
       APIM_BROKER_APIM_STOREENDPOINT: "https://wso2apim:9443"
@@ -44,5 +44,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root123
   wso2apim:
-    image: "wso2/wso2am:2.6.0"
+    image: "wso2/wso2am:3.1.0"
     restart: always
