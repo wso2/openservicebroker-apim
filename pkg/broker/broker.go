@@ -31,13 +31,13 @@ import (
 	"github.com/pivotal-cf/brokerapi/domain"
 	"github.com/pivotal-cf/brokerapi/domain/apiresponses"
 	"github.com/pkg/errors"
-	"github.com/wso2/service-broker-apim/pkg/apim"
-	"github.com/wso2/service-broker-apim/pkg/client"
-	"github.com/wso2/service-broker-apim/pkg/db"
-	"github.com/wso2/service-broker-apim/pkg/log"
-	"github.com/wso2/service-broker-apim/pkg/mapBrokerError"
-	"github.com/wso2/service-broker-apim/pkg/model"
-	"github.com/wso2/service-broker-apim/pkg/utils"
+	"github.com/wso2/openservicebroker-apim/pkg/apim"
+	"github.com/wso2/openservicebroker-apim/pkg/client"
+	"github.com/wso2/openservicebroker-apim/pkg/db"
+	"github.com/wso2/openservicebroker-apim/pkg/log"
+	"github.com/wso2/openservicebroker-apim/pkg/mapBrokerError"
+	"github.com/wso2/openservicebroker-apim/pkg/model"
+	"github.com/wso2/openservicebroker-apim/pkg/utils"
 )
 
 const (
@@ -433,7 +433,7 @@ func isSameAPIs(existingAPIs, requestedAPIs []API) bool {
 	if len(existingAPIs) != len(requestedAPIs) {
 		return false
 	}
-	for _, existingAPI := range existingAPIs { //TODO: try to optimize this (n*n too complex)
+	for _, existingAPI := range existingAPIs {
 		if !isArrayContainAPI(requestedAPIs, existingAPI) {
 			return false
 		}
@@ -684,7 +684,7 @@ func (apimBroker *APIM) Deprovision(ctx context.Context, svcInstanceID string,
 	err = apim.DeleteApplication(svcInstance.ApplicationID)
 	if err != nil {
 		log.Error("unable to delete the Application", err, logData)
-		return domain.DeprovisionServiceSpec{}, apiresponses.NewFailureResponse(errors.New(ErrMsgUnableDelInstance), http.StatusInternalServerError, ErrActionDelAPP) //TODO: consistancy ?
+		return domain.DeprovisionServiceSpec{}, apiresponses.NewFailureResponse(errors.New(ErrMsgUnableDelInstance), http.StatusInternalServerError, ErrActionDelAPP)
 	}
 
 	log.Debug(DebugMsgDelInstance, logData)
@@ -852,7 +852,7 @@ func (apimBroker *APIM) Unbind(ctx context.Context, svcInstanceID, bindingID str
 
 	if !isApplicationPlan(unbindDetails.PlanID) {
 		log.Error(ErrMsgInvalidPlanID, ErrInvalidSVCPlan, logData)
-		return domain.UnbindSpec{}, apiresponses.NewFailureResponse(errors.New("unbinding"), http.StatusBadRequest, "invalid planID") //TODO: consistant?
+		return domain.UnbindSpec{}, apiresponses.NewFailureResponse(errors.New("unbinding"), http.StatusBadRequest, "invalid planID")
 	}
 
 	bind, err := retrieveServiceBind(bindingID, logData)
@@ -860,7 +860,7 @@ func (apimBroker *APIM) Unbind(ctx context.Context, svcInstanceID, bindingID str
 		return domain.UnbindSpec{}, mapBrokerError.MapBrokerErrors(err)
 	}
 	if bind == nil {
-		return domain.UnbindSpec{}, apiresponses.ErrBindingDoesNotExist // TODO: consist?
+		return domain.UnbindSpec{}, apiresponses.ErrBindingDoesNotExist
 	}
 
 	logData.Add("cf-app-id", bind.PlatformAppID)

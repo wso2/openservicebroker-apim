@@ -19,7 +19,7 @@
 all: deps tests build
 
 build: ## Builds the service broker
-	go build -i github.com/wso2/service-broker-apim/cmd/servicebroker
+	go build -i github.com/wso2/openservicebroker-apim/cmd/servicebroker
 
 tests: ## Runs the tests
 	go test -v ./pkg/...
@@ -38,11 +38,11 @@ debug-setup-down:
 
 build-linux: ## Builds a Linux executable
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
-	go build -o ./target/linux/servicebroker github.com/wso2/service-broker-apim/cmd/servicebroker
+	go build -o ./target/linux/servicebroker github.com/wso2/openservicebroker-apim/cmd/servicebroker
 
 build-darwin: ## Builds a Darwin executable
 	GOOS=darwin GOARCH=amd64 CGO_ENABLED=0 \
-	go build -o ./target/darwin/servicebroker github.com/wso2/service-broker-apim/cmd/servicebroker
+	go build -o ./target/darwin/servicebroker github.com/wso2/openservicebroker-apim/cmd/servicebroker
 
 clean: ## Cleans up build artifacts
 	rm -f servicebroker

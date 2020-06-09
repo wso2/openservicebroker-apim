@@ -29,9 +29,9 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
-	"github.com/wso2/service-broker-apim/pkg/client"
-	"github.com/wso2/service-broker-apim/pkg/log"
-	"github.com/wso2/service-broker-apim/pkg/utils"
+	"github.com/wso2/openservicebroker-apim/pkg/client"
+	"github.com/wso2/openservicebroker-apim/pkg/log"
+	"github.com/wso2/openservicebroker-apim/pkg/utils"
 )
 
 const (
