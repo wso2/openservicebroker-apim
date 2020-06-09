@@ -27,14 +27,14 @@ import (
 	"os/signal"
 
 	"github.com/pivotal-cf/brokerapi"
-	"github.com/wso2/service-broker-apim/pkg/apim"
-	"github.com/wso2/service-broker-apim/pkg/broker"
-	"github.com/wso2/service-broker-apim/pkg/client"
-	"github.com/wso2/service-broker-apim/pkg/config"
-	"github.com/wso2/service-broker-apim/pkg/db"
-	"github.com/wso2/service-broker-apim/pkg/log"
-	"github.com/wso2/service-broker-apim/pkg/model"
-	"github.com/wso2/service-broker-apim/pkg/token"
+	"github.com/wso2/openservicebroker-apim/pkg/apim"
+	"github.com/wso2/openservicebroker-apim/pkg/broker"
+	"github.com/wso2/openservicebroker-apim/pkg/client"
+	"github.com/wso2/openservicebroker-apim/pkg/config"
+	"github.com/wso2/openservicebroker-apim/pkg/db"
+	"github.com/wso2/openservicebroker-apim/pkg/log"
+	"github.com/wso2/openservicebroker-apim/pkg/model"
+	"github.com/wso2/openservicebroker-apim/pkg/token"
 )
 
 const (

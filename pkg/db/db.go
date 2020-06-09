@@ -24,7 +24,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/wso2/service-broker-apim/pkg/model"
+	"github.com/wso2/openservicebroker-apim/pkg/model"
 
 	// mysql driver is blank import for grom
 	logPkg "log"
@@ -35,8 +35,8 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	"github.com/wso2/service-broker-apim/pkg/config"
-	"github.com/wso2/service-broker-apim/pkg/log"
+	"github.com/wso2/openservicebroker-apim/pkg/config"
+	"github.com/wso2/openservicebroker-apim/pkg/log"
 )
 
 const (
@@ -161,8 +161,8 @@ func Retrieve(e model.Entity) (bool, error) {
 	return true, nil
 }
 
-func RetrieveList(e model.Entity, r interface{}) (bool, error) { //TODO: check error first before recordNotFound all retrieve methods||
-	result := db.Table(e.TableName()).Where(e).Find(r) // can't do since an error throws saying record not found
+func RetrieveList(e model.Entity, r interface{}) (bool, error) {
+	result := db.Table(e.TableName()).Where(e).Find(r) 
 	if result.RecordNotFound() {
 		return false, nil
 	}

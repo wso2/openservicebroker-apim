@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"github.com/pivotal-cf/brokerapi/domain/apiresponses"
-	"github.com/wso2/service-broker-apim/pkg/apim"
-	"github.com/wso2/service-broker-apim/pkg/log"
+	"github.com/wso2/openservicebroker-apim/pkg/apim"
+	"github.com/wso2/openservicebroker-apim/pkg/log"
 )
 
 const (
@@ -152,7 +152,7 @@ func revertApplication(appID string, logData *log.Data) {
 
 }
 
-func MapBrokerErrors(err error) error { //TODO: mapBrokerError
+func MapBrokerErrors(err error) error {
 
 	switch err.(type) {
 	case *ErrorUnableToRetrieveServiceInstance:

@@ -24,7 +24,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/wso2/service-broker-apim/pkg/config"
+	"github.com/wso2/openservicebroker-apim/pkg/config"
 )
 
 const (

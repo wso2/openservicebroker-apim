@@ -15,8 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-// TODO comment
 package model
 
 // Entity represents a table in the database.
