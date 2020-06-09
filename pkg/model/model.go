@@ -15,6 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+// Package model handles the database models.
 package model
 
 // Entity represents a table in the database.
