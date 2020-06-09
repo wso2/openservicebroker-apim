@@ -11,3 +11,5 @@ require (
 	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
 	github.com/pkg/errors v0.8.1
 )
+
+go 1.13
