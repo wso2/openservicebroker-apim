@@ -466,7 +466,7 @@
 					"raw": "{\n    \"service_id\": \"{{service-id}}\",\n    \"plan_id\": \"{{app-plan-id}}\",\n    \"context\": {\n        \"platform\": \"cloudfoundry\"\n    },\n    \"organization_guid\": \"org-guid-here\",\n    \"space_guid\": \"space-guid-here\",\n    \"parameters\": {\n        \"apis\": [\n            {\"name\": \"WorldBank\", \"version\": \"1.0.0\"}\n        ],\n        \"abs\": { }\n    }\n}"
 				},
 				"url": {
-					"raw": "http:/{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}",
+					"raw": "http://{{host}}:{{port}}/v2/service_instances/{{app-plan-instance-id}}",
 					"host": [
 						"http:"
 					],
