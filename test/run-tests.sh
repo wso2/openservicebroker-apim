@@ -27,7 +27,7 @@ done
 
 docker run -v $PWD/test/collections:/etc/newman --network="host" -t postman/newman:ubuntu \
     run "APIM-OSB-Integration-tests.postman_collection.json" \
-    --environment="APIM-OSB-Integration-tests.postman_collection.json" \
+    --environment="APIM-OSB-Integration-tests.postman_environment.json" \
     --reporters="json,cli" --reporter-json-export="newman-results.json"
 
 docker-compose -f $PWD/test/integration-test-setup.yaml down
