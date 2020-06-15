@@ -34,7 +34,7 @@ debug-setup-up:
 	docker-compose -f ./test/debug-setup.yaml up -d
 
 debug-setup-down:
-	docker-compose -f ./test/debug-setup.yaml down
+	docker-compose -f ./test/debug-setup.yaml down  -v --remove-orphans
 
 build-linux: ## Builds a Linux executable
 	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \

@@ -23,10 +23,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"strconv"
-	"strings"
-
 	"github.com/mitchellh/hashstructure"
 	"github.com/pivotal-cf/brokerapi/domain"
 	"github.com/pivotal-cf/brokerapi/domain/apiresponses"
@@ -38,6 +34,8 @@ import (
 	"github.com/wso2/openservicebroker-apim/pkg/mapBrokerError"
 	"github.com/wso2/openservicebroker-apim/pkg/model"
 	"github.com/wso2/openservicebroker-apim/pkg/utils"
+	"net/http"
+	"strconv"
 )
 
 const (
@@ -48,15 +46,9 @@ const (
 	LogKeyBindID                     = "bind-id"
 	LogKeyApplicationName            = "application-name"
 	LogKeyPlatformApplicationName    = "platform-application-name"
-	LogKeySpaceID                    = "cf-space-id"
-	LogKeyOrgID                      = "cf-org-id"
 	ApplicationDashboardURL          = "application-dashboard-url"
 	ErrMsgUnableToStoreInstance      = "unable to store service instance in database"
-	ErrActionStoreInstance           = "store service instance"
 	ErrActionDelAPP                  = "delete Application"
-	ErrActionDelInstance             = "delete service instance"
-	ErrActionCreateAPIMResource      = "creating API-M resource"
-	ErrActionUpdateAPIMResource      = "update API-M resource"
 	ErrMsgUnableDelInstance          = "unable to delete service instance"
 	ErrMsgUnableToGetBind            = "unable to retrieve Bind from the database"
 	ErrMsgUnableToGenInputSchema     = "unable to generate %s plan input Schema"
@@ -71,8 +63,6 @@ const (
 	ApplicationPlanDescription       = "Creates an Application with a set of subscription for a given set of APIs in WSO2 API Manager"
 	DebugMsgDelInstance              = "delete instance"
 	ApplicationPrefix                = "ServiceBroker_"
-	StatusInstanceAlreadyExists      = "Instance already exists"
-	StatusInstanceDoesNotExist       = "Instance does not exist"
 )
 
 var (
@@ -309,16 +299,17 @@ func getServices() ([]domain.Service, error) {
 // createApplication creates Subscription in API-M and returns App ID, App dashboard URL and an error if encountered.
 func createApplication(appName string, logData *log.Data) (string, string, error) {
 	req := &apim.ApplicationCreateReq{
-		Name:           appName,
-		ThrottlingTier: "Unlimited",
-		Description:    "Application " + appName + " created by WSO2 APIM Service Broker",
+		Name:             appName,
+		ThrottlingPolicy: "Unlimited",
+		Description:      "Application " + appName + " created by WSO2 APIM Service Broker",
+		TokenType: "OAUTH",
 	}
 	appID, err := apim.CreateApplication(req)
 	if err != nil {
 		log.Error("unable to create application", err, logData)
 		return "", "", handleAPIMResourceCreateError(err, appName, logData)
 	}
-	dashboardURL := apim.GetAppDashboardURL(appName)
+	dashboardURL := apim.GetAppDashboardURL(appID)
 	return appID, dashboardURL, nil
 }
 
@@ -380,13 +371,10 @@ func getSubscriptionsListForAppID(applicationID string, logData *log.Data) ([]mo
 		ApplicationID: applicationID,
 	}
 	var subscriptionsList []model.Subscription
-	hasSubscriptions, err := db.RetrieveList(subscription, &subscriptionsList)
+	_, err := db.RetrieveList(subscription, &subscriptionsList)
 	if err != nil {
 		log.Error("unable to retrieve subscription", err, logData)
 		return subscriptionsList, &mapBrokerError.ErrorUnableToRetrieveSubscriptionList{}
-	}
-	if !hasSubscriptions {
-		return nil, nil
 	}
 	return subscriptionsList, nil
 }
@@ -547,13 +535,12 @@ func storeSubscriptions(subscriptions []model.Subscription) error {
 func getSubscriptionList(svcInstanceID string, subsResponses []apim.SubscriptionResp) []model.Subscription {
 	var subscriptions []model.Subscription
 	for _, subsResponse := range subsResponses {
-		apiIdentifier := strings.Split(subsResponse.APIIdentifier, "-")
 		subs := model.Subscription{
 			ID:            subsResponse.SubscriptionID,
-			ApplicationID: subsResponse.ApplicationID,
-			User:          apiIdentifier[0],
-			APIName:       apiIdentifier[1],
-			APIVersion:    apiIdentifier[2],
+			ApplicationID: subsResponse.ApplicationId,
+			User:          subsResponse.ApiInfo.Provider,
+			APIName:       subsResponse.ApiInfo.Name,
+			APIVersion:    subsResponse.ApiInfo.Version,
 			SVCInstanceID: svcInstanceID,
 		}
 		subscriptions = append(subscriptions, subs)
@@ -581,9 +568,9 @@ func createSubscriptions(svcInstance *model.ServiceInstance, apis []API, logData
 			return nil, &mapBrokerError.ErrorUnableToSearchAPIs{}
 		}
 		subReq := apim.SubscriptionReq{
-			ApplicationID: svcInstance.ApplicationID,
-			APIIdentifier: apiID,
-			Tier:          "Unlimited",
+			ApplicationID:    svcInstance.ApplicationID,
+			ApiID:            apiID,
+			ThrottlingPolicy: "Unlimited",
 		}
 		subscriptionRequests = append(subscriptionRequests, subReq)
 	}
@@ -908,7 +895,7 @@ func updateServiceForAddedAPIs(existingAPIs, updatedAPIs []API, svcInstance *mod
 
 func updateServiceForRemovedAPIs(existingAPIs []API, paramAPIs []API, svcInstance *model.ServiceInstance, logData *log.Data) error {
 
-	removeSubscriptionIDs, err := getRemovedSubscriptionsIDs(svcInstance.ApplicationID, existingAPIs, paramAPIs, logData) //updatesvcforremovedapis
+	removeSubscriptionIDs, err := getRemovedSubscriptionsIDs(svcInstance.ApplicationID, existingAPIs, paramAPIs, logData)
 	if err != nil {
 		return err
 	}

@@ -65,7 +65,6 @@ type APIM struct {
 	StoreSubscriptionContext         string `mapstructure:"storeSubscriptionContext"`
 	StoreMultipleSubscriptionContext string `mapstructure:"storeMultipleSubscriptionContext"`
 	StoreEndpoint                    string `mapstructure:"storeEndpoint"`
-	GenerateApplicationKeyContext    string `mapstructure:"generateApplicationKeyContext"`
 }
 
 // Auth represents the username and the password for basic auth.
@@ -177,13 +176,11 @@ func setDefaultConf() {
 	viper.SetDefault("apim.dynamicClientEndpoint", "https://localhost:9443")
 	viper.SetDefault("apim.dynamicClientRegistrationContext", "/client-registration/v0.16/register")
 	viper.SetDefault("apim.publisherEndpoint", "https://localhost:9443")
-	viper.SetDefault("apim.publisherAPIContext", "/api/am/publisher/v0.16/apis")
+	viper.SetDefault("apim.publisherAPIContext", "/api/am/publisher/v1/apis")
 	viper.SetDefault("apim.storeEndpoint", "https://localhost:9443")
-	viper.SetDefault("apim.storeApplicationContext", "/api/am/store/v0.16/applications")
-	viper.SetDefault("apim.storeSubscriptionContext", "/api/am/store/v0.16/subscriptions")
-	viper.SetDefault("apim.publisherChangeAPILifeCycleContext", "/api/am/publisher/v0.16/apis/change-lifecycle")
-	viper.SetDefault("apim.storeMultipleSubscriptionContext", "/api/am/store/v0.16/subscriptions/multiple")
-	viper.SetDefault("apim.generateApplicationKeyContext", "/api/am/store/v0.16/applications/generate-keys")
+	viper.SetDefault("apim.storeApplicationContext", "/api/am/store/v1/applications")
+	viper.SetDefault("apim.storeSubscriptionContext", "/api/am/store/v1/subscriptions")
+	viper.SetDefault("apim.storeMultipleSubscriptionContext", "/api/am/store/v1/subscriptions/multiple")
 
 	viper.SetDefault("db.host", "localhost")
 	viper.SetDefault("db.port", "3306")

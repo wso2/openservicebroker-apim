@@ -53,7 +53,6 @@ var (
 	storeApplicationEndpoint          string
 	storeSubscriptionEndpoint         string
 	storeMultipleSubscriptionEndpoint string
-	generateApplicationKeyEndpoint    string
 	applicationDashBoardURLBase       string
 	tokenManager                      token.Manager
 	once                              sync.Once
@@ -67,10 +66,10 @@ func Init(manager token.Manager, conf config.APIM) {
 		storeApplicationEndpoint = createEndpoint(conf.StoreEndpoint, conf.StoreApplicationContext)
 		storeSubscriptionEndpoint = createEndpoint(conf.StoreEndpoint, conf.StoreSubscriptionContext)
 		storeMultipleSubscriptionEndpoint = createEndpoint(conf.StoreEndpoint, conf.StoreMultipleSubscriptionContext)
-		generateApplicationKeyEndpoint = createEndpoint(conf.StoreEndpoint, conf.GenerateApplicationKeyContext)
-		applicationDashBoardURLBase = createEndpoint(conf.StoreEndpoint, "/store/site/pages/application.jag")
+		applicationDashBoardURLBase = createEndpoint(conf.StoreEndpoint, "/devportal/applications/")
 	})
 }
+
 
 // createEndpoint returns a endpoint from the given paths.
 func createEndpoint(paths ...string) string {
@@ -94,10 +93,8 @@ func CreateAPI(reqBody *APIReqBody) (string, error) {
 }
 
 // GetAppDashboardURL returns DashBoard URL for the given Application.
-func GetAppDashboardURL(appName string) string {
-	q := url.Values{}
-	q.Add("name", appName)
-	return applicationDashBoardURLBase + "?" + q.Encode()
+func GetAppDashboardURL(appID string) string {
+	return applicationDashBoardURLBase + "/" + appID + "/overview"
 }
 
 // CreateApplication creates an application with provided Application spec.
@@ -140,14 +137,14 @@ func GenerateKeys(appID string) (*ApplicationKeyResp, error) {
 		return nil, errors.New(ErrMsgAPPIDEmpty)
 	}
 	reqBody := defaultApplicationKeyGenerateReq()
+	generateApplicationKeyEndpoint, err := utils.ConstructURL(storeApplicationEndpoint, appID, "/generate-keys")
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot construct endpoint")
+	}
 	req, err := creatHTTPPOSTAPIRequest(generateApplicationKeyEndpoint, reqBody)
 	if err != nil {
 		return nil, err
 	}
-	q := url.Values{}
-	q.Add("applicationId", appID)
-	req.HTTPRequest().URL.RawQuery = q.Encode()
-
 	var resBody ApplicationKeyResp
 	err = send(GenerateKeyContext, req, &resBody, http.StatusOK)
 	if err != nil {
@@ -350,11 +347,11 @@ func SearchApplication(appName string) (string, error) {
 
 func defaultApplicationKeyGenerateReq() *ApplicationKeyGenerateRequest {
 	return &ApplicationKeyGenerateRequest{
-		ValidityTime:       "3600",
-		KeyType:            "PRODUCTION",
-		AccessAllowDomains: []string{"ALL"},
-		Scopes:             []string{"am_application_scope", "default"},
-		SupportedGrantTypes: []string{"urn:ietf:params:oauth:grant-type:saml2-bearer", "iwa:ntlm", "refresh_token",
-			"client_credentials", "password"},
+		ValidityTime:            "3600",
+		KeyType:                 "PRODUCTION",
+		Scopes:                  []string{"am_application_scope", "default"},
+		GrantTypesToBeSupported: []string{"client_credentials", "password", "refresh_token"},
+		//SupportedGrantTypes: []string{"urn:ietf:params:oauth:grant-type:saml2-bearer", "iwa:ntlm", "refresh_token",
+		//	"client_credentials", "password"},
 	}
 }
