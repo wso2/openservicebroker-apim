@@ -152,21 +152,21 @@ func Delete(e model.Entity) error {
 // Returns true if the instance exists and any error encountered.
 func Retrieve(e model.Entity) (bool, error) {
 	result := db.Table(e.TableName()).Where(e).Find(e)
-	if result.RecordNotFound() {
-		return false, nil
-	}
 	if result.Error != nil {
+		if result.RecordNotFound() {
+			return false, nil
+		}
 		return false, result.Error
 	}
 	return true, nil
 }
 
 func RetrieveList(e model.Entity, r interface{}) (bool, error) {
-	result := db.Table(e.TableName()).Where(e).Find(r) 
-	if result.RecordNotFound() {
-		return false, nil
-	}
+	result := db.Table(e.TableName()).Where(e).Find(r)
 	if result.Error != nil {
+		if result.RecordNotFound() {
+			return false, nil
+		}
 		return false, result.Error
 	}
 	return true, nil
@@ -174,10 +174,10 @@ func RetrieveList(e model.Entity, r interface{}) (bool, error) {
 
 func RetrieveListByQuery(e model.Entity, query string, r interface{}) (bool, error) {
 	result := db.Table(e.TableName()).Where(query).Find(r)
-	if result.RecordNotFound() {
-		return false, nil
-	}
 	if result.Error != nil {
+		if result.RecordNotFound() {
+			return false, nil
+		}
 		return false, result.Error
 	}
 	return true, nil
