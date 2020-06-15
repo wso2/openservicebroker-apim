@@ -60,6 +60,9 @@ lint: ## Run golint on the code
 format: ## Run gofmt on the code
 	gofmt -w ./pkg/* ./cmd/*
 
+docker:
+	docker build -t wso2/openservicebroker-apim:3.1.0.1 -f k8s/dockerfile/Dockerfile .
+
 help: ## Shows the help
 	@echo 'Usage: make <OPTIONS> ... <TARGETS>'
 	@echo ''

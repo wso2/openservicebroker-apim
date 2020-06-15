@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------
 #
-# Copyright 2019 WSO2, Inc. (http://wso2.com)
+# Copyright 2020 WSO2, Inc. (http://wso2.com)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -33,7 +33,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /servicebroker-
 
 FROM amd64/alpine:3.10.2
 COPY --from=builder /servicebroker-linux ./
-COPY ./test/init-scripts/wait-for-deps.sh ./wait-for-deps.sh
-RUN chmod +x ./wait-for-deps.sh
-ENTRYPOINT ["./wait-for-deps.sh"]
-
+RUN chmod +x ./servicebroker-linux
+ENTRYPOINT ["./servicebroker-linux"]
