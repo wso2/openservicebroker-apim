@@ -30,11 +30,10 @@ import (
 const (
 	publisherTestEndpoint         = "https://localhost:9443"
 	StoreTestEndpoint             = "https://localhost:9443"
-	StoreApplicationContext       = "/api/am/store/v0.14/applications"
-	StoreSubscriptionContext      = "/api/am/store/v0.14/subscriptions"
+	StoreApplicationContext       = "/api/am/store/v1/applications"
+	StoreSubscriptionContext      = "/api/am/store/v1/subscriptions"
 	MultipleSubscriptionContext   = StoreSubscriptionContext + "/multiple"
-	GenerateApplicationKeyContext = StoreApplicationContext + "/generate-keys"
-	PublisherAPIContext           = "/api/am/publisher/v0.14/apis"
+	PublisherAPIContext           = "/api/am/publisher/v1/apis"
 	successTestCase               = "success test case"
 	failureTestCase               = "failure test case"
 	ErrMsgTestIncorrectResult     = "expected value: %v but then returned value: %v"
@@ -59,7 +58,6 @@ func init() {
 		StoreMultipleSubscriptionContext: MultipleSubscriptionContext,
 		PublisherAPIContext:              PublisherAPIContext,
 		PublisherEndpoint:                publisherTestEndpoint,
-		GenerateApplicationKeyContext:    GenerateApplicationKeyContext,
 	})
 
 }
@@ -155,22 +153,11 @@ func TestGenerateKeys(t *testing.T) {
 
 func testGenerateKeysFailFunc() func(t *testing.T) {
 	return func(t *testing.T) {
-		httpmock.Activate()
-		defer httpmock.DeactivateAndReset()
-		responder, err := httpmock.NewJsonResponder(http.StatusInternalServerError, nil)
-		if err != nil {
-			t.Error(err)
-		}
-		httpmock.RegisterResponder(http.MethodPost, StoreTestEndpoint+GenerateApplicationKeyContext, responder)
-
-		_, err = GenerateKeys("")
+		_, err := GenerateKeys("")
 		if err.Error() != ErrMsgAPPIDEmpty {
 			t.Error("Expecting an error : " + ErrMsgAPPIDEmpty + " got: " + err.Error())
 		}
-		_, err = GenerateKeys("")
-		if err == nil {
-			t.Error("Expecting an error with code: " + strconv.Itoa(http.StatusInternalServerError))
-		}
+
 	}
 }
 
@@ -184,7 +171,7 @@ func testGenerateKeysSuccessFunc() func(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		httpmock.RegisterResponder(http.MethodPost, StoreTestEndpoint+GenerateApplicationKeyContext, responder)
+		httpmock.RegisterResponder(http.MethodPost, StoreTestEndpoint+StoreApplicationContext+"/123/generate-keys", responder)
 
 		got, err := GenerateKeys("123")
 		if err != nil {
@@ -213,9 +200,9 @@ func testCreateMultipleSubscriptionFailFunc() func(t *testing.T) {
 
 		_, err = CreateMultipleSubscriptions([]SubscriptionReq{
 			{
-				APIIdentifier: "a",
-				ApplicationID: "b",
-				Tier:          "c",
+				ApiID:            "a",
+				ApplicationID:    "b",
+				ThrottlingPolicy: "c",
 			},
 		})
 		if err == nil {
@@ -242,14 +229,14 @@ func testCreateMultipleSubscriptionSuccessFunc() func(t *testing.T) {
 		httpmock.RegisterResponder(http.MethodPost, StoreTestEndpoint+MultipleSubscriptionContext, responder)
 		got, err := CreateMultipleSubscriptions([]SubscriptionReq{
 			{
-				APIIdentifier: "a",
-				ApplicationID: "b",
-				Tier:          "c",
+				ApiID:            "a",
+				ApplicationID:    "b",
+				ThrottlingPolicy: "c",
 			},
 			{
-				APIIdentifier: "a1",
-				ApplicationID: "b1",
-				Tier:          "c1",
+				ApiID:            "a1",
+				ApplicationID:    "b1",
+				ThrottlingPolicy: "c1",
 			},
 		})
 		if err != nil {

@@ -140,10 +140,10 @@ type ApplicationMetadata struct {
 
 // ApplicationCreateReq represents the response of create Application API call.
 type ApplicationCreateReq struct {
-	ThrottlingTier string `json:"throttlingTier"`
-	Description    string `json:"description,omitempty"`
-	Name           string `json:"name,omitempty"`
-	CallbackURL    string `json:"callbackUrl,omitempty"`
+	ThrottlingPolicy string `json:"throttlingPolicy"`
+	TokenType        string `json:"tokenType"`
+	Description      string `json:"description,omitempty"`
+	Name             string `json:"name,omitempty"`
 }
 
 // APIParam represents the structure for API plan parameters.
@@ -170,17 +170,17 @@ type SubscriptionParam struct {
 
 // SubscriptionReq represents the APIM subscription create request.
 type SubscriptionReq struct {
-	Tier          string `json:"tier"`
-	APIIdentifier string `json:"apiIdentifier"`
-	ApplicationID string `json:"applicationId"`
+	ThrottlingPolicy string `json:"throttlingPolicy"`
+	ApiID            string `json:"apiId"`
+	ApplicationID    string `json:"applicationId"`
 }
 
 // AppCreateReq represents the application creation request body.
 type AppCreateReq struct {
-	ThrottlingTier string `json:"throttlingTier"`
-	Description    string `json:"description"`
-	Name           string `json:"name"`
-	CallbackURL    string `json:"callbackUrl"`
+	ThrottlingPolicy string `json:"throttlingPolicy"`
+	Description      string `json:"description"`
+	Name             string `json:"name"`
+	CallbackURL      string `json:"callbackUrl"`
 }
 
 // AppCreateRes represents the application creation response body.
@@ -193,17 +193,16 @@ type ApplicationKeyGenerateRequest struct {
 	KeyType      string `json:"keyType"`
 	ValidityTime string `json:"validityTime"`
 	// The grant types that are supported by the application
-	SupportedGrantTypes []string `json:"supportedGrantTypes,omitempty"`
+	GrantTypesToBeSupported []string `json:"grantTypesToBeSupported,omitempty"`
 	// Callback URL
 	CallbackURL string `json:"callbackUrl,omitempty"`
-	// Allowed domains for the access token
-	AccessAllowDomains []string `json:"accessAllowDomains"`
 	// Allowed scopes for the access token
 	Scopes []string `json:"scopes,omitempty"`
 	// Client ID for generating access token.
 	ClientID string `json:"clientId,omitempty"`
 	// Client secret for generating access token. This is given together with the client ID.
 	ClientSecret string `json:"clientSecret,omitempty"`
+	AdditionalProperties string `json:"additionalProperties,omitempty"`
 }
 
 // ApplicationKeyResp represents the Application generate keys API call response.
@@ -240,11 +239,19 @@ type SubscriptionResp struct {
 	// The UUID of the subscription
 	SubscriptionID string `json:"subscriptionId,omitempty"`
 	// The UUID of the application
-	ApplicationID string `json:"applicationId"`
+	ApplicationId string `json:"applicationId,omitempty"`
+	// The UUID of the application
+	ApiID string `json:"apiId"`
 	// The unique identifier of the API.
-	APIIdentifier string `json:"apiIdentifier"`
-	Tier          string `json:"tier"`
-	Status        string `json:"status,omitempty"`
+	ApiInfo SubscriptionRespApiInfo `json:"apiInfo"`
+	ThrottlingPolicy string `json:"throttlingPolicy"`
+}
+
+// SubscriptionRespApiInfo represents the API info of response of create Subscription API call.
+type SubscriptionRespApiInfo struct {
+	Name string `json:"name"`
+	Version string `json:"version"`
+	Provider string `json:"provider"`
 }
 
 // APISearchInfo represents the API search information.

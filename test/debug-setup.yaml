@@ -18,7 +18,7 @@
 version: '3'
 services:
   mysql:
-    image: "mysql:5.7.14"
+    image: "mysql:5.7"
     restart: always
     volumes:
       - ./dbscripts/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -27,7 +27,7 @@ services:
     ports:
       - "3306:3306"
   wso2apim:
-    image: "wso2/wso2am:3.1.0"
+    image: "docker.wso2.com/wso2am:3.1.0.1590074075033"
     restart: always
     ports:
       - "9443:9443"
