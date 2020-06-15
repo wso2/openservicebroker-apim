@@ -1,0 +1,109 @@
+# Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Default values for openservicebroker-apim.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: wso2/openservicebroker-apim
+  tag: 3.1.0.1
+  pullPolicy: IfNotPresent
+# Specify dockerfile registry credentials.
+imagePullSecrets: []
+# Override name of app.
+nameOverride: ""
+# Override the full qualified app name.
+fullnameOverride: ""
+
+service:
+  type: ClusterIP
+  port: 8444
+
+# Configure Ingress.
+ingress:
+  enabled: true
+  annotations: 
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: openservicebroker-apim.example.com
+      paths: ["/"]
+
+  tls:
+    - hosts:
+        - openservicebroker-apim.com
+      secretName: ""
+
+# Configure environment variables for Service broker.
+configs:
+    APIM_BROKER_LOG_LEVEL: debug
+    APIM_BROKER_HTTP_SERVER_AUTH_USERNAME: admin
+    APIM_BROKER_HTTP_SERVER_AUTH_PASSWORD: admin
+    APIM_BROKER_APIM_USERNAME: admin
+    APIM_BROKER_APIM_PASSWORD: admin
+    APIM_BROKER_APIM_TOKENENDPOINT: ""
+    APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT: ""
+    APIM_BROKER_APIM_PUBLISHERENDPOINT: ""
+    APIM_BROKER_APIM_STOREENDPOINT: ""
+    APIM_BROKER_DB_HOST: wso2openservicebroker-apim-db-service
+    APIM_BROKER_DB_PORT: 3306
+    APIM_BROKER_DB_USERNAME: wso2carbon
+    APIM_BROKER_DB_PASSWORD: wso2carbon
+    APIM_BROKER_DB_DATABASE: BROKER
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+# Allow the APIM service broker pods to schedule on selected nodes.
+nodeSelector: {}
+# Allow the APIM service broker pods to schedule on tainted nodes (requires Kubernetes >= 1.6).
+tolerations: []
+# Allow the APIM service broker pods to schedule using affinity rules.
+affinity: {}
+
+# Manage dependencies for the Service broker.
+dependencies:
+  # Enable MySQL chart for Service broker.
+  mysql: true
+
+# Configurations for init containers.
+initContainers:
+  initDB:
+    host: "wso2openservicebroker-apim-db-service"
+    port: 3306
+  initAPIM:
+    host: ""
+    port: 9443
+
+# Configuration for MySQL sub chart.
+mysql:
+  imageTag: "5.7.29"
+  mysqlRootPassword: root
+  mysqlUser: wso2carbon
+  mysqlPassword: wso2carbon
+  fullnameOverride: "wso2openservicebroker-apim-db-service"
+  configurationFiles:
+    mysql.cnf: |-
+      [mysqld]
+      max_connections = 10000
+  initializationFiles:
+    apim_broker.sql: |-
+      CREATE DATABASE BROKER;
+      GRANT ALL ON BROKER.* TO 'wso2carbon'@'%' IDENTIFIED BY 'wso2carbon';

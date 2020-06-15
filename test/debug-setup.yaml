@@ -27,7 +27,7 @@ services:
     ports:
       - "3306:3306"
   wso2apim:
-    image: "docker.wso2.com/wso2am:3.1.0.1590074075033"
+    image: "wso2/wso2am:3.1.0"
     restart: always
     ports:
       - "9443:9443"
