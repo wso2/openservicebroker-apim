@@ -36,11 +36,11 @@ $ cd $GOPATH/src/github.com/wso2/openservicebroker_apim
 | ${broker-db-password}         | Password for authentication to databases                  | root              |
 | ${broker-db-name}             | Name of the database that you want to store your data in  | broker            |
 
-4. Set the environment variable for the ```config.yaml``` using the follwing command. 
+4. Set the environment variable for the ```config.yaml``` using the following command.
 ```
 $ export APIM_BROKER_CONF_FILE=$GOPATH/src/github.com/wso2/openservicebroker_apim/config/config.yaml
 ```
-5. Create Service Broker binary executable, using the repective command below.
+5. Create Service Broker binary executable, using the respective command below.
 * Ubuntu OS users
 ```
 $ make build-linux
@@ -63,11 +63,11 @@ $ ./servicebroker
 ```
 
 ## Working with APIM Service Broker for Pivotal Cloud Foundry (PCF)
-WSO2 API Manager Service for PCF  furnish a set of subscribed APIs  to be consumed in a user application. 
+WSO2 API Manager Service for PCF  furnishes a set of subscribed APIs  to be consumed in a user application. 
 
 #### Checking availability of APIM Service broker. 
 
-To use the APIM service for PCF, the service has to be readily available in the marketplace. User can assess the availability by runing the following command.
+To use the APIM service for PCF, the service has to be readily available in the marketplace. User can assess the availability by running the following command.
 ```
 $ cf marketplace
 ```
@@ -124,7 +124,7 @@ $ cf bind-service [APP] [SERVICE INSTANCE]
 
 To stop the app from using APIM Service, unbind from the service using the following command. 
 ```
-$ cf unbind-service [APP] [SERVIECE_INSTANCE]
+$ cf unbind-service [APP] [SERVICE_INSTANCE]
 ```
 3. Deleting a Service Instance
 
@@ -139,9 +139,9 @@ Note:  First confirm to unbind all the apps that were consuming the APIM service
 
 ```[SERVICE_INSTANCE]: Service instance name```
 
-```[SERVICE]: The name of the APIM service you want to create an instance. of (i.e:  wso2apim-service)```
+```[SERVICE]: The name of the APIM service you want to create an instance. (i.e. wso2apim-service)```
 
-```[PLAN]: The name of the APIM service plan that meets your need. (i.e: app )```
+```[PLAN]: The name of the APIM service plan that meets your need. (i.e. app )```
 
 ```[SERVICE_INSTANCE]: Provide any service instance name```
 
