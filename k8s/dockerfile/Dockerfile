@@ -32,6 +32,30 @@ RUN dep ensure
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /servicebroker-linux github.com/wso2/openservicebroker-apim/cmd/servicebroker
 
 FROM amd64/alpine:3.10.2
-COPY --from=builder /servicebroker-linux ./
-RUN chmod +x ./servicebroker-linux
-ENTRYPOINT ["./servicebroker-linux"]
+LABEL maintainer="WSO2 Docker Maintainers <dev@wso2.org>"
+
+# build arguments for user/group configurations
+ARG USER=wso2carbon
+ARG USER_ID=802
+ARG USER_GROUP=wso2
+ARG USER_GROUP_ID=802
+ARG USER_HOME=/home/${USER}
+
+# create the non-root user and group
+RUN \
+    addgroup -S -g ${USER_GROUP_ID} ${USER_GROUP} \
+    && adduser -S -u ${USER_ID} -h ${USER_HOME} -G ${USER_GROUP} ${USER}
+
+# copy the binary from builder image
+COPY --from=builder /servicebroker-linux ${USER_HOME}/
+
+# set permission for the binary
+RUN \
+    chmod +x ${USER_HOME}/servicebroker-linux \
+    && chown wso2carbon:wso2 ${USER_HOME}/servicebroker-linux
+
+# set the user and work directory
+USER ${USER_ID}
+WORKDIR ${USER_HOME}
+
+ENTRYPOINT ["/home/wso2carbon/servicebroker-linux"]
