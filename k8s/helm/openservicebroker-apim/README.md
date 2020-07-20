@@ -40,6 +40,19 @@ helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --version 0.1.0 -
 
 * `NAMESPACE` should be the Kubernetes Namespace in which the resources are deployed.
 
+>Example:
+To integrate with [WSO2 API manager pattern 1](https://github.com/wso2/kubernetes-apim/blob/3.1.x/advanced/am-pattern-1/README.md),
+ assuming the WSO2 API Manager Open Service Broker and the WSO2 API manager pattern 1 are in the same namespace,
+ 
+ ```
+ helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --namespace <NAMESPACE> \
+ --set configs.APIM_BROKER_APIM_TOKENENDPOINT='https://wso2am-pattern-1-am-service:8243' \
+ --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set configs.APIM_BROKER_APIM_STOREENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set initContainers.initAPIM.host='wso2am-pattern-1-am-service' \
+ --set initContainers.initAPIM.port='9443' 
+ ```
 ##### 2. Access WSO2 APIM Open Service Broker.
  
 Default deployment will expose `openservicebroker-apim.example.com` host.
@@ -91,6 +104,20 @@ helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim -
 **Note:**
 `NAMESPACE` should be the Kubernetes Namespace in which the resources are deployed
 
+>Example:
+To integrate with [WSO2 API manager pattern 1](https://github.com/wso2/kubernetes-apim/blob/3.1.x/advanced/am-pattern-1/README.md),
+ assuming the WSO2 API Manager Open Service Broker and the WSO2 API manager pattern 1 are in the same namespace,
+ 
+ ```
+ helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim --namespace <NAMESPACE> \
+ --set configs.APIM_BROKER_APIM_TOKENENDPOINT='https://wso2am-pattern-1-am-service:8243' \
+ --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set configs.APIM_BROKER_APIM_STOREENDPOINT='https://wso2am-pattern-1-am-service:9443' \
+ --set initContainers.initAPIM.host='wso2am-pattern-1-am-service' \
+ --set initContainers.initAPIM.port='9443' 
+ ```
+  
 ##### 3. Access WSO2 APIM Open Service Broker.
 
  
