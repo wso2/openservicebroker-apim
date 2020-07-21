@@ -29,7 +29,7 @@
 ##### 1. Deploy Helm chart for the deployment of WSO2 APIM Open Service Broker.
 
 ```
-helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --version 0.1.0 --namespace <NAMESPACE> \
+helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --version 3.1.0-1 --namespace <NAMESPACE> \
 --set configs.APIM_BROKER_APIM_TOKENENDPOINT='<APIM_TOKEN_ENDPOINT>' \
 --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='<APIM_DYNAMIC_CLIENT_ENDPOINT>' \
 --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='<APIM_PUBLISHER_ENDPOINT>' \
@@ -45,7 +45,7 @@ To integrate with [WSO2 API manager pattern 1](https://github.com/wso2/kubernete
  assuming the WSO2 API Manager Open Service Broker and the WSO2 API manager pattern 1 are in the same namespace,
  
  ```
- helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --namespace <NAMESPACE> \
+ helm install --name <RELEASE_NAME> wso2/openservicebroker-apim --version 3.1.0-1 --namespace <NAMESPACE> \
  --set configs.APIM_BROKER_APIM_TOKENENDPOINT='https://wso2am-pattern-1-am-service:8243' \
  --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='https://wso2am-pattern-1-am-service:9443' \
  --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='https://wso2am-pattern-1-am-service:9443' \
@@ -93,7 +93,7 @@ git clone https://github.com/wso2/openservicebroker-apim.git
 ##### 2. Deploy Helm chart for the deployment of WSO2 APIM Open Service Broker.
 
 ```
-helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim --namespace <NAMESPACE> \
+helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim --version 3.1.0-1 --namespace <NAMESPACE> \
 --set configs.APIM_BROKER_APIM_TOKENENDPOINT='<APIM_TOKEN_ENDPOINT>' \
 --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='<APIM_DYNAMIC_CLIENT_ENDPOINT>' \
 --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='<APIM_PUBLISHER_ENDPOINT>' \
@@ -109,7 +109,7 @@ To integrate with [WSO2 API manager pattern 1](https://github.com/wso2/kubernete
  assuming the WSO2 API Manager Open Service Broker and the WSO2 API manager pattern 1 are in the same namespace,
  
  ```
- helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim --namespace <NAMESPACE> \
+ helm install --dep-up --name <RELEASE_NAME> <HELM_HOME>/openservicebroker-apim --version 3.1.0-1 --namespace <NAMESPACE> \
  --set configs.APIM_BROKER_APIM_TOKENENDPOINT='https://wso2am-pattern-1-am-service:8243' \
  --set configs.APIM_BROKER_APIM_DYNAMICCLIENTENDPOINT='https://wso2am-pattern-1-am-service:9443' \
  --set configs.APIM_BROKER_APIM_PUBLISHERENDPOINT='https://wso2am-pattern-1-am-service:9443' \
